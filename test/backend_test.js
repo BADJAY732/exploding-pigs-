@@ -1,8 +1,6 @@
 /*\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-Filename : exploding-chickens/test/test.js
 Desc     : evaluation suite for testing game,
            player, and card interactions
-Author(s): RAk3rman, SengdowJones, Vincent Do
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
 
 //Packages

@@ -1,8 +1,6 @@
 /*\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-Filename : exploding-chickens/config/setup.js
 Desc     : checks and sets up configuration values
            in env.json using data-store
-Author(s): RAk3rman
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
 
 // Packages
@@ -14,7 +12,6 @@ const moment = require('moment');
 
 // Name : setup.check_values()
 // Desc : checks all env.json values and configures each value if invalid
-// Author(s) : RAk3rman
 exports.check_values = function (config_storage, stats_storage) {
     spinner.start(wipe(`${chalk.bold.cyan('Setup')}:   [` + moment().format('MM/DD/YY-HH:mm:ss') + `] Checking configuration values`));
     let invalid_config = false;
