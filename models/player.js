@@ -37,5 +37,9 @@ module.exports = mongoose.Schema({
     connection: {
         type: String,
         default: "online"
+    },
+    score: {
+        type: Number,
+        default: 0 // คะแนนเริ่มต้นของผู้เล่น
     }
 });

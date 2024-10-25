@@ -12,7 +12,6 @@ const ora = require('ora');
 const spinner = ora('');
 const wipe = chalk.white;
 const moment = require('moment');
-
 //Services
 let card_actions = require('../services/card-actions.js');
 let game_actions = require('../services/game-actions.js');
@@ -22,18 +21,41 @@ let player_actions = require('../services/player-actions.js');
 module.exports = function (fastify, stats_storage) {
     stats_storage.set('sockets_active', 0);
     spinner.succeed(wipe(`${chalk.bold.blue('Socket')}:  [` + moment().format('MM/DD/YY-HH:mm:ss') + `] Successfully opened socket.io connection`));
-
     // Name : socket.on.connection
     // Desc : runs when a new connection is created through socket.io
-    // Author(s) : RAk3rman
     fastify.io.on('connection', function (socket) {
         stats_storage.set('sockets_active', stats_storage.get('sockets_active') + 1);
         spinner.info(wipe(`${chalk.bold.blue('Socket')}:  [` + moment().format('MM/DD/YY-HH:mm:ss') + `] ${chalk.dim.green('new-connection  ')} ` + socket.id ));
         let player_data = {};
 
+         // New chat message event handling
+        socket.on("chat message", (data) => {
+            console.log("Chat message received: " + data);
+            fastify.io.emit("chat message", data); // Broadcast the chat message to all connected clients
+        });
+
+        // จัดการ event เวลาหมด
+    socket.on('timer-expired', async function (data) {
+        // ตรวจสอบว่ามีเกมและผู้เล่นอยู่
+        if (await game.exists({ slug: data.slug, "players._id": data.player_id })) {
+            // ดึงรายละเอียดของเกม
+            let game_details = await game_actions.game_details_slug(data.slug);
+
+            // ตรวจสอบว่าเป็นเทิร์นของผู้เล่นคนนี้หรือไม่
+            if (validate_turn(data.player_id, game_details)) {
+                // เปลี่ยนไปยังเทิร์นของผู้เล่นถัดไป
+                await game_actions.advance_turn(game_details);
+
+                // อัปเดตสถานะไปยังทุกคน
+                await update_game_ui(data.slug, "", "timer-expired", socket.id, data.player_id);
+            }
+        } else {
+            fastify.io.to(socket.id).emit(data.slug + "-error", "เกมหรือผู้เล่นไม่ถูกต้อง");
+        }
+    });
+
         // Name : socket.on.player-connected
         // Desc : runs when the client receives game data and is hosting a valid player
-        // Author(s) : RAk3rman
         socket.on('player-connected', async function (data) {
             spinner.start(wipe(`${chalk.bold.blue('Socket')}:  [` + moment().format('MM/DD/YY-HH:mm:ss') + `] ${chalk.dim.cyan('player-connected')} ` + socket.id + ` ${chalk.dim.yellow(data.slug)} Updating player status to connected`));
             // Verify game and player exists
@@ -50,7 +72,6 @@ module.exports = function (fastify, stats_storage) {
                 fastify.io.to(socket.id).emit(data.slug + "-error", "Game does not exist");
             }
         })
-
         // Name : socket.on.retrieve-game
         // Desc : runs when game data is requested from the client
         // Author(s) : RAk3rman
@@ -66,7 +87,7 @@ module.exports = function (fastify, stats_storage) {
                 fastify.io.to(socket.id).emit(data.slug + "-error", "Game does not exist");
             }
         })
-
+        
         // Name : socket.on.create-player
         // Desc : runs when a new player to be created
         // Author(s) : RAk3rman

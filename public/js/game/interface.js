@@ -164,7 +164,7 @@ function itr_trigger_exp(card_id, setup) {
             "            <div class=\"block text-center space-y-2\">\n" +
             "                <h1 class=\"font-extrabold text-xl m-0\">DEFUSE</h1>\n" +
             "                <h1 class=\"font-bold text-8xl m-0\" id=\"itr_val_defuse_counter\">" + ec_defuse_count + "</h1>\n" +
-            "                <h1 class=\"font-extrabold text-xl m-0\">CHICKEN</h1>\n" +
+            "                <h1 class=\"font-extrabold text-xl m-0\">PIGS</h1>\n" +
             "            </div>\n" +
             "        </div>\n" +
             "    </div>\n" +
@@ -250,13 +250,13 @@ function itr_trigger_chicken_target(max_pos, card_id) {
     Swal.fire({
         html:
             "<div class=\"inline-block\">" +
-            "    <h1 class=\"text-3xl font-semibold pb-1 text-white\">Place the Exploding Chicken</h1>" +
-            "    <h1 class=\"text-xl font-semibold pb-5 text-white\">Use the toggles below to rig the deck</h1>" +
+            "    <h1 class=\"text-3xl font-semibold pb-1 text-white\">Place the Exploding Pigs</h1>" +
+            "    <h1 class=\"text-xl font-semibold pb-5 text-white\">ใช้ปุ่มด้านล่างเพื่อเลือกวางการ์ดหรือสุ่ม</h1>" +
             "    <div class=\"inline-block sm:flex items-center justify-center\">\n" +
             "        <div class=\"rounded-xl shadow-lg center-card bg-center bg-contain\" style=\"background-image: url('/public/cards/base/chicken.png');width: 12rem;height: 16.9rem;border-radius: 1.8rem\"></div>\n" +
             "        <div class=\"mt-2 sm:ml-3\">" +
             "            <button onclick=\"Swal.close();place_chicken('" + card_id + "', 'random', '" + max_pos + "')\" class=\"mb-2 w-48 h-12 bg-yellow-500 hover:bg-yellow-600 text-white text-lg font-semibold border border-transparent rounded-xl focus:outline-none transition-colors duration-200\">\n" +
-            "                 <i class=\"fas fa-random pr-2\"></i>Place Randomly\n" +
+            "                 <i class=\"fas fa-random pr-2\"></i>สุ่มสลับ\n" +
             "            </button>\n" +
             "            <div class=\"bg-transparent mb-2\">\n" +
             "                <div class=\"flex justify-center items-center\">\n" +
@@ -272,7 +272,7 @@ function itr_trigger_chicken_target(max_pos, card_id) {
             "                </div>\n" +
             "            </div>" +
             "            <button id=\"custom_chicken_pos\" onclick=\"Swal.close();place_chicken('" + card_id + "', 'custom', '" + max_pos + "')\" class=\"w-48 h-12 bg-purple-500 hover:bg-purple-600 text-white text-lg font-semibold border border-transparent rounded-xl focus:outline-none transition-colors duration-200\">\n" +
-            "                 Place on Top\n" +
+            "                 วางไว้บนสำรับ\n" +
             "            </button>\n" +
             "        </div>" +
             "    </div>" +
@@ -287,14 +287,14 @@ function itr_trigger_chicken_target(max_pos, card_id) {
 // Desc : increments the # of cards deep in the chicken pos ui
 function _itr_inc_chicken_pos(max_pos) {
     let cur = document.getElementById("custom_chicken_pos").innerHTML.trim();
-    if (cur === "Place on Top" && max_pos === 1) {
-        document.getElementById("custom_chicken_pos").innerHTML = "Place on Bottom";
-    } else if (cur === "Place on Top" && max_pos > 1) {
+    if (cur === "วางไว้บนสำรับ" && max_pos === 1) {
+        document.getElementById("custom_chicken_pos").innerHTML = "วางไว้ใต้สำรับ";
+    } else if (cur === "วางไว้บนสำรับ" && max_pos > 1) {
         document.getElementById("custom_chicken_pos").innerHTML = "Place 1 Card Deep";
-    } else if (cur !== "Place on Bottom" && max_pos >= parseInt(cur.substr(6,2)) + 1) {
+    } else if (cur !== "วางไว้ใต้สำรับ" && max_pos >= parseInt(cur.substr(6,2)) + 1) {
         document.getElementById("custom_chicken_pos").innerHTML = "Place " + (parseInt(cur.substr(6,2)) + 1) + " Cards Deep";
-    } else if (cur !== "Place on Bottom" && max_pos >= parseInt(cur.substr(6,2))) {
-        document.getElementById("custom_chicken_pos").innerHTML = "Place on Bottom";
+    } else if (cur !== "วางไว้ใต้สำรับ" && max_pos >= parseInt(cur.substr(6,2))) {
+        document.getElementById("custom_chicken_pos").innerHTML = "วางไว้ใต้สำรับ";
     }
 }
 
@@ -303,13 +303,13 @@ function _itr_inc_chicken_pos(max_pos) {
 function _itr_dec_chicken_pos(max_pos) {
     let cur = document.getElementById("custom_chicken_pos").innerHTML.trim();
     let cur_place = parseInt(cur.substr(6,2));
-    if ((max_pos <= 1 || cur_place === 1) && cur !== "Place on Top") {
-        document.getElementById("custom_chicken_pos").innerHTML = "Place on Top";
+    if ((max_pos <= 1 || cur_place === 1) && cur !== "วางไว้บนสำรับ") {
+        document.getElementById("custom_chicken_pos").innerHTML = "วางไว้บนสำรับ";
     } else if ((max_pos <= 2 || cur_place === 2) && cur !== "Place on Top") {
         document.getElementById("custom_chicken_pos").innerHTML = "Place 1 Card Deep";
     } else if (cur_place > 2) {
         document.getElementById("custom_chicken_pos").innerHTML = "Place " + (parseInt(cur.substr(6,2)) - 1) + " Cards Deep";
-    } else if (cur === "Place on Bottom") {
+    } else if (cur === "วางไว้ใต้สำรับ") {
         document.getElementById("custom_chicken_pos").innerHTML = "Place " + (max_pos - 1) + " Cards Deep";
     }
 }
@@ -320,9 +320,9 @@ function place_chicken(card_id, source, max_pos) {
     let position = Math.floor(Math.random() * (parseInt(max_pos) + 1));
     if (source === "custom") {
         let cur = document.getElementById("custom_chicken_pos").innerHTML.trim();
-        if (cur === "Place on Top") {
+        if (cur === "วางไว้บนสำรับ") {
             position = 0;
-        } else if (cur === "Place on Bottom") {
+        } else if (cur === "วางไว้ใต้สำรับ") {
             position = max_pos
         } else {
             position = parseInt(cur.substr(6,2));
@@ -370,15 +370,15 @@ function itr_display_winner(name, count) {
     // Fire swal once and repeat
     if (count === 0) {
         Swal.fire({
-            html: "<h1 class=\"text-4xl text-gray-700 mt-3\" style=\"font-family: Bebas Neue\">WINNER WINNER <a class=\"text-yellow-400\">CHICKEN</a> DINNER</h1>\n" +
+            html: "<h1 class=\"text-4xl text-gray-700 mt-3\" style=\"font-family: Bebas Neue\">WINNER WINNER <a class=\"text-yellow-400\">PIGS</a> DINNER</h1>\n" +
                 "<h1 class=\"text-xl text-gray-700 mt-1 font-bold\">" + name + "</h1>\n" +
-                "<h1 class=\"text-md text-gray-700 mt-2\">After the smoke has cleared, it appears that " + name + " was the last one standing. Test your odds again by staying in the lobby.</h1>\n",
+                "<h1 class=\"text-md text-gray-700 mt-2\">หลังจากควันระเบิดจางลง ปรากฎว่า " + name + "ยืนหยัดเป็นคนสุดท้าย. ทดสอบใหม่อีกครั้งในล๊อบบี้</h1>\n",
             showConfirmButton: false,
             showCancelButton: true,
             backdrop: "transparent",
             background: "#F8F8F8",
             cancelButtonColor: '#374151',
-            cancelButtonText: 'Return to Lobby'
+            cancelButtonText: 'กลับสู่หน้าล๊อบบี้'
         })
     }
     if (count < 7) {

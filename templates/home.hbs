@@ -40,12 +40,7 @@
     <div class="w-full container mx-auto">
         <div class="w-full flex items-center justify-between">
             <div class="flex-shrink-0">
-                <h1 class="h-8 text-4xl text-white opacity-80" style="font-family: Bebas Neue"><a class="text-yellow-400">EXPLODING</a> CHICKENS</h1>
-            </div>
-            <div class="flex w-1/2 justify-end content-center">
-                <a class="inline-block text-white opacity-80 no-underline hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out" href="https://github.com/rak3rman/exploding-chickens" target="_blank">
-                    <svg class="fill-current h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                </a>
+                <h1 class="h-8 text-4xl text-white opacity-80" style="font-family: Bebas Neue"><a class="text-yellow-400">EXPLODING</a> PIGS</h1>
             </div>
         </div>
     </div>
@@ -53,25 +48,18 @@
     <div class="container pt-24 md:pt-56 mx-auto flex flex-wrap flex-col md:flex-row items-center">
         <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
             <h1 class="my-4 text-4xl md:text-5xl text-white opacity-80 font-bold leading-tight text-left">
-                Ba-da bing!
+                Pigs 
                 <span class="block sm:inline-block">
-                    Ba-da
+                    Oink-Oink
                     <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-yellow-500">
-                        boom!
+                        Boom!
                     </span>
                 </span>
             </h1>
-            <p class="leading-normal text-white opacity-80 text-lg md:text-2xl mb-2 text-left">
-                A beautiful, online alternative to the popular Exploding Kittens card game (just with chickens)
-            </p>
-            <p class="leading-normal text-white opacity-80 text-lg md:text-2xl mb-8 text-left">
-                <strong>{{ stat_games_played }}</strong> games played.
-                <strong>{{ stat_explosions }}</strong> chickens exploded.
-            </p>
             <div class="flex flex-wrap space-y-4 sm:space-y-0 sm:space-x-4 text-center">
                 <form class="pr-3 mb-3" action="/game/create" method="POST" enctype="application/x-www-form-urlencoded">
                     <button type="submit" class="w-auto sm:h-14 h-12 flex-none bg-yellow-500 hover:bg-yellow-600 text-gray-100 text-lg font-semibold px-6 border border-transparent rounded-xl focus:outline-none transition-colors duration-200">
-                        New Game
+                        เริ่มเกม
                     </button>
                 </form>
                 <div class="bg-transparent" style="margin-left: 0; margin-top: 0">
@@ -80,9 +68,9 @@
                             <div class="absolute sm:top-4 top-3 left-3">
                                 <i class="fa fa-search text-gray-400 z-20 hover:text-gray-400"></i>
                             </div>
-                            <input type="text" id="game_slug" class="sm:h-14 h-12 sm:w-96 w-80 pl-9 pr-20 rounded-xl text-lg z-0 bg-transparent text-gray-100 border-2 border-gray-500 focus:outline-none" placeholder="Enter game code...">
+                            <input type="text" id="game_slug" class="sm:h-14 h-12 sm:w-96 w-80 pl-9 pr-20 rounded-xl text-lg z-0 bg-transparent text-gray-100 border-2 border-gray-500 focus:outline-none" placeholder="ใส่โค้ด เพื่อเข้าร่วมเกม...">
                             <div class="absolute top-0 right-0">
-                                <button class="sm:h-14 h-12 w-28 text-gray-100 font-semibold rounded-r-xl border-2 border-gray-500 bg-red-600 hover:bg-red-700 focus:outline-none" onclick="join_game()">Join Game</button>
+                                <button class="sm:h-14 h-12 w-28 text-gray-100 font-semibold rounded-r-xl border-2 border-gray-500 bg-red-600 hover:bg-red-700 focus:outline-none" onclick="join_game()">เข้าร่วมเกม</button>
                             </div>
                         </div>
                     </div>
@@ -96,19 +84,19 @@
         {{! How to Play }}
         <div class="flex flex-col w-full justify-center overflow-y-hidden pt-20">
             <h1 class="my-4 text-4xl md:text-5xl text-white opacity-80 font-bold leading-tight text-left">
-                How to <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-yellow-500">Play</span>
+                วิธีการ <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-yellow-500">เล่น</span>
             </h1>
             <p class="leading-normal text-white opacity-80 text-lg md:text-2xl mb-8 text-left">
-                The first rule of Exploding Chickens is simple. Don't explode.
+                กฎเหล็กการเล่นง่ายๆ คือห้ามโดนระเบิด
             </p>
         </div>
         {{! How to Play: Game Structure }}
         <div class="flex flex-col w-full justify-center overflow-y-hidden pt-2 pb-5">
             <p class="leading-normal text-white opacity-80 text-2xl md:text-3xl text-left">
-                Game Structure
+                รูปแบบการเล่น
             </p>
             <p class="leading-normal text-white opacity-60 text-lg md:text-2xl pt-1.5 text-left">
-                Supports 2-5 players. {{ stats_avg_play_time }} min average play time.
+                รองรับผู้เล่นได้ตั้งแต่ 2-5คน
             </p>
         </div>
         <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
@@ -120,10 +108,10 @@
                 </div>
                 <div class="ml-4">
                     <dt class="text-lg text-white opacity-80">
-                        Understanding the Basics
+                        ความเข้าใจพื้นฐานเกี่ยวกับเกม
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Exploding Chickens is a card game based on both luck and strategy. Throughout the game, you draw cards from the deck which can either secure your victory or lead to your explosive demise. Action cards help give you an advantage over your opponents. But beware: the deadly Exploding Chicken is also hidden in the mix.
+                        Exploding Pigs เป็นเกมไพ่ที่ใช้โชคและกลยุทธ์ ตลอดเวลาทั้งเกม คุณจะจั่วไพ่จากสำรับซึ่งสามารถได้รับชัยชนะหรือนำไปสู่การโดนระเบิด การ์ดแอคชั่นช่วยให้คุณได้เปรียบเหนือคู่ต่อสู้ แต่ระวังการ์ด Exploding Pigs ที่อันตรายนั้นก็ซ่อนอยู่ในส่วนผสมด้วย
                     </dd>
                 </div>
             </div>
@@ -135,10 +123,10 @@
                 </div>
                 <div class="ml-4">
                     <dt class="text-lg text-white opacity-80">
-                        Taking your Turn
+                        ในรอบตาของคุณ
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        At the start of your turn, you can play as many (or as few) action cards as you’d like. That is, as long as the circumstances permit. Some unique cards will allow you to skip your turn entirely while others can force you to draw multiple times. Just follow the cards instructions below on how to play each action card. End your turn by drawing a card from the deck.
+                        เมื่อเริ่มเทิร์นของคุณ คุณสามารถเล่นการ์ดแอคชั่นได้มาก (หรือน้อย) เท่าที่คุณต้องการนั่น ตราบเท่าที่สถานการณ์เอื้ออำนวย เพียงทำตามคำแนะนำด้านล่างเกี่ยวกับวิธีการเล่นการ์ดแอคชั่นแต่ละใบ และจบเทิร์นของคุณด้วยการจั่วการ์ดจากเด็ด
                     </dd>
                 </div>
             </div>
@@ -150,10 +138,10 @@
                 </div>
                 <div class="ml-4">
                     <dt class="text-lg text-white opacity-80">
-                        Drawing an Exploding Chicken
+                        เมื่อจั่วได้การ์ดหมูระเบิดหรือ Exploding Pigs 
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        When you continue drawing card after card in the game, there comes a point where someone will draw an Exploding Chicken. If that’s you, you have two options: defuse the ticking time bomb or say goodbye to your chances of winning. The number of Exploding Chickens is always one less than the number of players alive.
+                        เมื่อคุณจั่วได้การ์ด Exploding Pigs คุณจะมี 2ทางเลือก คือกลบเกลื่อนระเบิดเวลาโดยใช้การ์ดกู้ระเบิด (Defuse) หรือบอกลาโอกาสในการชนะ จำนวนหมูระเบิดจะน้อยกว่าจำนวนผู้เล่นที่ยังมีชีวิตอยู่เสมอ
                     </dd>
                 </div>
             </div>
@@ -165,10 +153,10 @@
                 </div>
                 <div class="ml-4">
                     <dt class="text-lg text-white opacity-80">
-                        Winner Winner Chicken Dinner
+                        Winner Winner Pigs Dinner
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Winning the game is pretty simple. Use whatever cards at your disposal, combined with your smarts, to be the last person alive. After you witness each of your friends fall one by one to the wrath of the Exploding Chicken, congratulations! You’ve claimed the bragging rights to one of the most explosive games on the planet. Don’t let them forget.
+                        การชนะเกมนั้นค่อนข้างง่าย ใช้การ์ดอะไรก็ได้ตามที่คุณต้องการ ร่วมกับกลยุทธ์ เพื่อเป็นคนสุดท้ายที่ยังมีชีวิตอยู่ หลังจากที่คุณได้เห็นเพื่อนของคุณโดนการ์ดหมูระเบิดจนหมด ของแสดงความยินดีด้วย! คุณได้ชนะในเกมนี้
                     </dd>
                 </div>
             </div>
@@ -176,10 +164,7 @@
         {{! How to Play: Base Card Pack }}
         <div class="flex flex-col w-full justify-center overflow-y-hidden pt-10 pb-5">
             <p class="leading-normal text-white opacity-80 text-2xl md:text-3xl text-left">
-                Base Pack
-            </p>
-            <p class="leading-normal text-white opacity-60 text-lg md:text-2xl pt-1.5 text-left">
-                The classics. Used by default in every game.
+                การ์ดแอคชั่นที่มี
             </p>
         </div>
         <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-x-8 md:gap-y-10">
@@ -189,10 +174,10 @@
                 </div>
                 <div class="ml-4">
                     <dt class="text-xl text-white opacity-80">
-                        The <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-yellow-500">Exploding</span> Chicken <i class="opacity-30 text-lg">x1-4</i>
+                        The <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-yellow-500">Exploding</span> Pigs <i class="opacity-30 text-lg">x1-4</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Avoid this little guy <i>at all costs</i>. Once this card is drawn, you must use a defuse card to stop the ticking time bomb. If you don't have a defuse card, it looks like your time is up.
+                        การ์ดหมูระเบิด เมื่อผู้เล่นจั่วได้การ์ดหมูระเบิด การ์ดหมูระเบิดที่จั่วได้จะแสดงผลให้ผู้เล่นอื่นเห็น และผู้เล่นที่จั่วได้ จะมีเวลาในการกู้ระเบิด 15 วินาที หากผู้เล่นไม่ใช้การ์ดกู้ระเบิดหรือไม่มีการ์ดกู้ระเบิด ผู้เล่นจะแพ้ในเกมนั้นทันที
                     </dd>
                 </div>
             </div>
@@ -205,7 +190,7 @@
                         Defuse <i class="opacity-30 text-lg">x6</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Clip the wires and stop the Exploding Chicken from exploding. Once defused, the player puts the Exploding Chicken back in the deck wherever they'd like.
+                        การ์ดกู้ระเบิด สามารถใช้ได้เมื่อผู้เล่นจั่วได้การ์ดหมูระเบิดเท่านั้น เมื่อผู้เล่นใช้การ์ดกู้ระเบิดแล้ว จะต้องนำการ์ดหมูระเบิดที่ได้ใส่กลับเข้าไปในส่วนใดก็ได้ของกองการ์ด จึงจะทำให้ผู้เล่นจะสามารถเล่นต่อในรอบถัดไปได้
                     </dd>
                 </div>
             </div>
@@ -218,7 +203,7 @@
                         Attack <i class="opacity-30 text-lg">x4</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Seek vengeance on your friends by forcing the next player in line to take 2 turns. Attack cards can be stacked to force the next player to take 4, 6, and even 8+ turns.
+                        การ์ดโจมตี สามารถใช้การ์ดดังกล่าวกับผู้เล่นที่จะเล่นในรอบถัดไป โดยผู้เล่นที่โดนความสามรถของการ์ดโจมตีจะต้องจั่วการ์ดจากกอง 2ใบ
                     </dd>
                 </div>
             </div>
@@ -231,7 +216,7 @@
                         See the Future <i class="opacity-30 text-lg">x5</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Allow yourself to see the top three cards in the deck. Be quick though, because you only have 5 seconds. Does not count as a turn.
+                        การ์ดมองเห็นอนาคต สามารถใช้ดูการ์ด 3 ใบแรกของกองการ์ด เป็นเวลา 5 วินาที จากนั้นนำกลับเข้ากองการ์ดตามเดิม
                     </dd>
                 </div>
             </div>
@@ -244,7 +229,7 @@
                         Skip <i class="opacity-30 text-lg">x4</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Effectively skips your turn without having to draw a card. If you are stuck with multiple turns, the skip card only removes one turn.
+                        การ์ดข้ามผู้เล่นสามารถใช้การ์ดข้าม เพื่อข้ามการจั่วการ์ดในรอบของตนเอง
                     </dd>
                 </div>
             </div>
@@ -257,7 +242,7 @@
                         Reverse <i class="opacity-30 text-lg">x4</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Skips your turn and reverses the turn direction, all without having to draw a card. If you are stuck with multiple turns, the reverse card only removes one turn.
+                        การ์ดย้อนกลับ เปลี่ยนทิศทางการเล่นเกมการ์ดโดยหมุนวนไปอีกทาง
                     </dd>
                 </div>
             </div>
@@ -270,7 +255,7 @@
                         Shuffle <i class="opacity-30 text-lg">x4</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Shuffles the deck to <i>hopefully</i> decrease your odds at drawing an Exploding Chicken. Plain and simple. Does not count as a turn.
+                        การ์ดสับกอง สามารถสับกองการ์ดได้ทั้งสำรับ
                     </dd>
                 </div>
             </div>
@@ -283,7 +268,7 @@
                         Favor <i class="opacity-30 text-lg">x4</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Allows you to ask for a favor <i>(aka steal a card)</i> from anyone still in the game. Your target really can't do much about it. Does not count as a turn.
+                        การ์ดขอ สามารถขอการ์ดจากผู้เล่นอื่น 1 ใบ โดยการสุ่มการ์ดจากผู้เล่นที่ถูกเลือก
                     </dd>
                 </div>
             </div>
@@ -293,23 +278,18 @@
                 </div>
                 <div class="ml-4">
                     <dt class="text-xl text-white opacity-80">
-                        Random Chickens <i class="opacity-30 text-lg">x4(4)</i>
+                        Random Pigs <i class="opacity-30 text-lg">x4(4)</i>
                     </dt>
                     <dd class="mt-2 text-base text-white opacity-60">
-                        Does the exact same thing as the favor card with a small caveat. You must have <strong>two identical</strong> random chickens to use this action. Both cards will be discarded.
+                        การ์ดสุ่มหมู การ์ดใบนี้จะมีความสามารถเมื่อมี 2 ใบ ทำให้ผู้เล่นสามารถสุ่มการ์ดจากผู้เล่นอื่นได้ 1 ใบ หากผู้เล่นมีการ์ดสุ่มหมูเพียง 1 ใบ จะไม่สามารถสุ่มการ์ดจากผู้เล่นอื่นได้
                     </dd>
                 </div>
             </div>
         </div>
-        {{! Footer }}
-        <div class="w-full pt-16 pb-12 text-sm text-center md:text-left fade-in">
-            <h1 class="text-white opacity-80 pb-1 md:float-left md:mr-1">Exploding Chickens <script>document.write(new Date().getFullYear())</script>.</h1>
-            <h1 class="text-white opacity-80 pb-1 md:float-left">Made with <i class="fas fa-heart text-red-500"></i> by our <a class="text-blue-400" href="https://github.com/rak3rman/exploding-chickens#contributors" target="_blank">contributors</a>.</h1>
-            <h1 class="text-white opacity-80 pb-1 md:float-right">Release v{{ version }}</h1>
-        </div>
     </div>
 </div>
 </body>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0"></script>

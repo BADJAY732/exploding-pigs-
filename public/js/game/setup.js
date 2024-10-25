@@ -88,8 +88,8 @@ function setup_user_prompt(game_details, err, nickname) {
         })
     } else {
         Swal.fire({
-            html: "<h1 class=\"text-4xl text-gray-700 mt-3\" style=\"font-family: Bebas Neue\">Welcome to <a class=\"text-yellow-400\">EXPLODING</a> CHICKENS</h1>\n" +
-                "<h1 class=\"text-sm text-gray-700\">Game Code: " + game_details.slug + " | Created: " + moment(game_details.created).calendar() + "</a><br><br><a class=\"text-red-500\">" + err + "</a></h1>\n" +
+            html: "<h1 class=\"text-4xl text-gray-700 mt-3\" style=\"font-family: Bebas Neue\">Welcome to <a class=\"text-yellow-400\">EXPLODING</a> PIGS</h1>\n" +
+                "<h1 class=\"text-sm text-gray-700\">รหัสห้อง: " + game_details.slug + " | ห้อง: " + moment(game_details.created).calendar() + "</a><br><br><a class=\"text-red-500\">" + err + "</a></h1>\n" +
                 "<div class=\"my-3 flex w-full max-w-sm mx-auto space-x-3 shadow-md\">\n" +
                 "    <input\n" +
                 "        class=\"text-center flex-1 appearance-none border border-transparent w-full py-2 px-10 bg-white text-gray-700 placeholder-gray-400 rounded-sm text-base border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500\"\n" +

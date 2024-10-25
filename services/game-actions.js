@@ -2,7 +2,6 @@
 Filename : exploding-chickens/services/game-actions.js
 Desc     : all actions and helper functions
            related to game play
-Author(s): RAk3rman
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
 
 // Packages
@@ -23,7 +22,6 @@ let player_actions = require('./player-actions.js');
 
 // Name : game_actions.create_game()
 // Desc : creates a new game in mongodb, returns game details
-// Author(s) : RAk3rman
 exports.create_game = async function () {
     // Create new promise and return created_game after saved
     return await new Promise((resolve, reject) => {
@@ -41,7 +39,6 @@ exports.create_game = async function () {
 
 // Name : game_actions.game_details_slug(slug)
 // Desc : returns the details for a game slug
-// Author(s) : RAk3rman
 exports.game_details_slug = async function (slug) {
     // Create new promise and return found_game after saved
     return await new Promise((resolve, reject) => {
@@ -57,7 +54,6 @@ exports.game_details_slug = async function (slug) {
 
 // Name : game_actions.game_details_id(_id)
 // Desc : returns the details for a game id
-// Author(s) : RAk3rman
 exports.game_details_id = async function (_id) {
     // Create new promise and return found_game after saved
     return await new Promise((resolve, reject) => {
@@ -73,7 +69,6 @@ exports.game_details_id = async function (_id) {
 
 // Name : game_actions.import_cards(game_id, pack_loc)
 // Desc : bulk import cards via json file
-// Author(s) : RAk3rman
 exports.import_cards = async function (game_id, pack_loc) {
     // Get game details
     let game_details = await game_actions.game_details_id(game_id);
@@ -105,7 +100,6 @@ exports.import_cards = async function (game_id, pack_loc) {
 
 // Name : game_actions.draw_card(game_details, player_id)
 // Desc : draw a card from the draw deck and place at the end of a players hand
-// Author(s) : Vincent Do, RAk3rman
 exports.draw_card = async function (game_details, player_id) {
     // Filter draw deck
     let draw_deck = await card_actions.filter_cards("draw_deck", game_details.cards);
@@ -147,7 +141,6 @@ exports.draw_card = async function (game_details, player_id) {
 
 // Name : game_actions.base_router(game_details, player_id, card_id, target, stats_storage)
 // Desc : base deck - calls the appropriate card function based on card action
-// Author(s) : RAk3rman
 exports.base_router = async function (game_details, player_id, card_id, target, stats_storage) {
     // Find card details from id
     let card_details = await card_actions.find_card(card_id, game_details.cards);
@@ -238,7 +231,6 @@ exports.base_router = async function (game_details, player_id, card_id, target, 
 
 // Name : game_actions.discard_card(game_details, card_id)
 // Desc : put a card in discard deck
-// Author(s) : RAk3rman
 exports.discard_card = async function (game_details, card_id) {
     // Find greatest position in discard deck
     let discard_deck = await card_actions.filter_cards("discard_deck", game_details.cards);
@@ -268,7 +260,6 @@ exports.discard_card = async function (game_details, card_id) {
 
 // Name : game_actions.advance_turn(game_details)
 // Desc : advance to the next turn
-// Author(s) : RAk3rman
 exports.advance_turn = async function (game_details) {
     // Check how many turns we have left
     if (game_details.turns_remaining <= 1) { // Only one turn left, player seat advances
@@ -296,7 +287,6 @@ exports.advance_turn = async function (game_details) {
 
 // Name : game_actions.is_winner(game_details)
 // Desc : check to see if there is a winner
-// Author(s) : RAk3rman
 exports.is_winner = async function (game_details) {
     // Count the number of active players
     let ctn = 0;
@@ -314,7 +304,11 @@ exports.is_winner = async function (game_details) {
         await new Promise((resolve, reject) => {
             game.findOneAndUpdate(
                 { slug: game_details.slug, "players._id": player_id },
-                {"$set": { "players.$.status": "winner" }},
+                {
+                    "$set": { "players.$.status": "winner" },
+                    "$inc": { "players.$.score": 1 }  // Increment score by 1
+                },
+                { new: true },
                 function (err) {
                     if (err) {
                         reject(err);
@@ -329,9 +323,14 @@ exports.is_winner = async function (game_details) {
     }
 }
 
+exports.end_game = async function(game_details) {
+    let winner_id = game_details.is_winner; // ต้องมีการกำหนด winner_id อย่างถูกต้องจากลอจิกเกม
+    // ค้นหาและอัพเดทคะแนนผู้ชนะ
+    await Player.findOneAndUpdate({_id: winner_id}, {$inc: {score: 1}}, {new: true});
+}
+
 // Name : game_actions.reset_game(game_details, player_status, game_status)
 // Desc : resets the game to default
-// Author(s) : Vincent Do, RAk3rman
 exports.reset_game = async function (game_details, player_status, game_status) {
     // Reset cards
     for (let i = 0; i <= game_details.cards.length - 1; i++) {
@@ -361,10 +360,8 @@ exports.reset_game = async function (game_details, player_status, game_status) {
         });
     });
 }
-
 // Name : game_actions.delete_game(game_id)
 // Desc : deletes a existing game in mongodb, returns game_id
-// Author(s) : RAk3rman
 exports.delete_game = async function (game_id) {
     // Create new promise and return game_id after deleted
     return await new Promise((resolve, reject) => {
@@ -380,7 +377,6 @@ exports.delete_game = async function (game_id) {
 
 // Name : game_actions.game_purge(debug)
 // Desc : deletes all games that are over 7 days old
-// Author(s) : RAk3rman
 exports.game_purge = async function (debug) {
     if (debug !== false) {
         spinner.info(wipe(`${chalk.bold.red('Purge')}:   [` + moment().format('MM/DD/YY-HH:mm:ss') + `] Purging all games older than ` + config_storage.get('game_purge_age_hrs') + ` hours`));
@@ -411,7 +407,6 @@ exports.game_purge = async function (debug) {
 
 // Name : game_actions.log_event(game_details, event, player_id)
 // Desc : creates a new event and returns the game details, unsaved
-// Author(s) : RAk3rman
 exports.log_event = async function (game_details, event, player_id) {
     // game_details.events.push({
     //     event: event,

@@ -46,6 +46,7 @@
     "ora": "^5.1.0",
     "point-of-view": "^4.7.0",
     "postcss": "^8.2.10",
+    "socket.io": "^4.7.5",
     "sweetalert2": "^10.16.2",
     "tailwindcss": "^2.0.2",
     "unique-names-generator": "^4.3.1",

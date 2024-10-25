@@ -4,7 +4,10 @@ Desc     : handles setup for player settings in browser
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
 
 // Declare socket.io
-let socket = io();
+var socket = io();
+let countdownInterval;
+let currentTimer = 100;
+//var socket = io();
 // Swal toast settings
 const toast_alert = Swal.mixin({
     toast: true,
@@ -25,6 +28,40 @@ let session_user = {
  SOCKET.IO EVENTS
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
 
+function startCountdown(seconds = 100) {
+    currentTimer = seconds;
+    document.getElementById('countdown-timer').textContent = currentTimer;
+    countdownInterval = setInterval(() => {
+        currentTimer--;
+        document.getElementById('countdown-timer').textContent = currentTimer;
+        if (currentTimer <= 0) {
+            clearInterval(countdownInterval);
+            socket.emit('timer-expired', { slug: window.location.pathname.substr(6), player_id: session_user._id });
+        }
+    }, 1000);
+}
+
+
+function stopCountdown() {
+    clearInterval(countdownInterval);
+}
+
+// ฟังข้อความแชทจากเซิร์ฟเวอร์
+socket.on("chat message", function(data){
+  var li = document.createElement("li");
+  li.textContent = data;
+  document.getElementById("messages").appendChild(li);
+});
+
+// ส่งข้อความแชทไปยังเซิร์ฟเวอร์เมื่อฟอร์มถูกส่ง
+document.getElementById("chat-form").addEventListener('submit', function(e){
+    console.log("chat message: ", document.getElementById('m').value);
+  e.preventDefault(); // ป้องกันไม่ให้หน้าเพจโหลดใหม่
+  socket.emit("chat message", document.getElementById('m').value);
+  document.getElementById('m').value = '';
+  return false;
+});
+
 // Name : frontend-game.socket.on.{slug}-update
 // Desc : whenever an event occurs containing a game update
 socket.on(window.location.pathname.substr(6) + "-update", function (data) {
@@ -42,7 +79,8 @@ socket.on(window.location.pathname.substr(6) + "-update", function (data) {
         sbr_update_widgets(data);
         sbr_update_players(data);
         itr_update_players(data);
-    } else if (data.trigger === "start-game") { // Game started
+    } else if (data.trigger === "start-game") {  // Game started
+        stopCountdown();
         sbr_update_widgets(data);
         sbr_update_pstatus(data);
         itr_update_players(data);
@@ -53,7 +91,9 @@ socket.on(window.location.pathname.substr(6) + "-update", function (data) {
             icon: 'info',
             html: '<h1 class="text-lg font-bold pl-2 pr-1">Game has started</h1>'
         });
+        startCountdown(100);
     } else if (data.trigger === "reset-game") { // Game was reset or there is a winner
+        stopCountdown();
         sbr_update_widgets(data);
         sbr_update_pstatus(data);
         itr_update_pstatus(data);
@@ -76,6 +116,7 @@ socket.on(window.location.pathname.substr(6) + "-update", function (data) {
             });
         }
     } else if (data.trigger === "play-card") { // A card was played by a player
+        console.log('play');
         if (data.req_player_id !== session_user._id) {
             itr_update_discard(data);
             itr_update_hand(data);
@@ -84,9 +125,12 @@ socket.on(window.location.pathname.substr(6) + "-update", function (data) {
         itr_update_players(data);
         itr_update_pcards(data);
     } else if (data.trigger === "draw-card") { // A card was drawn by a player
+        stopCountdown();
+        console.log('draw', data.players[data.seat_playing]._id, data.seat_playing);
         sbr_update_widgets(data);
         itr_update_pcards(data);
         itr_update_hand(data);
+        startCountdown(100);
     } else if (data.trigger === "make-host") {
         // Update host designation in session_user
         for (let i = 0; i < data.players.length; i++) {

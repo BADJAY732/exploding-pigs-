@@ -1,8 +1,3 @@
-/*\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-Filename : exploding-chickens/app.js
-Desc     : main application file
-Author(s): RAk3rman
-\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
 
 // Packages and configuration - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -46,6 +41,7 @@ setup.check_values(config_storage, stats_storage);
 const fastify = require('fastify')({logger: false});
 
 // Prepare rendering template
+
 fastify.register(require('point-of-view'), {
     engine: {
         handlebars: require('handlebars')
@@ -73,7 +69,7 @@ error_routes(fastify);
 // Home page
 fastify.get('/', (req, reply) => {
     reply.view('/templates/home.hbs', {
-        title: "Exploding Chickens",
+        title: "Exploding Pigs",
         version: pkg.version,
         stat_games_played: stats_storage.get('games_played').toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
         stat_explosions: stats_storage.get('explosions').toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
@@ -82,6 +78,7 @@ fastify.get('/', (req, reply) => {
 })
 
 // Game page
+/*\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 fastify.get('/game/:_id', {
     config: {
         rateLimit: {
@@ -97,6 +94,30 @@ fastify.get('/game/:_id', {
         reply.status(404).view('/templates/error.hbs', { error_code: "404", title: "Game does not exist", desc_1: "Unfortunately, we could not find the game lobby you are looking for.", desc_2: "Try a different link or create a new game on the home page." });
     }
 })
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\*/
+
+fastify.get('/game/:_id',{
+    config: {
+        rateLimit: {
+            max: 15,
+            timeWindow: '1 minute'
+        }
+    }
+}, async function (req, reply) {
+    if (await game.exists({ slug: req.params._id })) {
+        let game_details = await game_actions.game_details_slug(req.params._id);
+        let playersData = game_details.players.map(player => ({
+            nickname: player.nickname,
+            score: player.score
+        }));
+        reply.view('/templates/game.hbs', {
+            slug: req.params._id,
+            players: playersData
+        });
+    } else {
+        reply.status(404).view('/templates/error.hbs', { error_code: "404", title: "Game does not exist", desc_1: "Unfortunately, we could not find the game lobby you are looking for.", desc_2: "Try a different link or create a new game on the home page." });
+    }
+});
 
 // End of Fastify and main functions - - - - - - - - - - - - - - - - - - - - - -
 

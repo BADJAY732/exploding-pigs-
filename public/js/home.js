@@ -17,6 +17,7 @@ const toast_alert = Swal.mixin({
 // Declare socket.io
 let socket = io();
 
+
 // Attempt to join game
 function join_game() {
     // Get game slug from input

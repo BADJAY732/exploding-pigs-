@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Exploding Chickens: {{ slug_1 }}</title>
+    <title>Exploding Pigs: {{ slug_1 }}</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/public/css/tailwind.css" rel="stylesheet">
@@ -63,7 +63,7 @@
             {{! Exploding Chickens header }}
             <button class="flex items-center" onclick="window.location.href = '/'">
                 <div class="flex-shrink-0">
-                    <h1 class="h-8 text-3xl text-gray-700" style="font-family: Bebas Neue"><a class="text-yellow-400">EXPLODING</a> CHICKENS</h1>
+                    <h1 class="h-8 text-3xl text-gray-700" style="font-family: Bebas Neue"><a class="text-yellow-400">EXPLODING</a> PIGS</h1>
                 </div>
             </button>
             {{! Right sidebar actions }}
@@ -89,7 +89,58 @@
             </div>
         </div>
     </div>
+    <div>countdown time</div>
+    <div id="countdown-timer" class="timer-display">100</div>
 </nav>
+{{! Game statistics }}
+<div class="player-scores">
+    <p class="title">คะแนนของผู้เล่น</p>
+    <ul>
+      {{#each players}}
+        <li>{{nickname}}: {{score}}</li>
+      {{/each}}
+    </ul>
+    <style>
+.player-scores {
+    background: #f9f9f9; /* light grey background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 15px;  /* Reduced padding */
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;  /* Smaller maximum width */
+}
+
+.player-scores .title {
+    font-size: 1.2em;  /* Smaller font size */
+    color: #333;
+    text-align: center;
+    margin-bottom: 8px;  /* Less space below the title */
+    font-weight: bold;
+}
+
+.player-scores ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.player-scores ul li {
+    background: white;
+    padding: 8px 10px;  /* Reduced padding inside list items */
+    margin-bottom: 6px;  /* Reduced margin between items */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease-in-out;
+    font-size: 0.9em;  /* Smaller text size */
+}
+
+.player-scores ul li:hover {
+    transform: translateY(-2px);  /* Subtle hover effect */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+    </style>
+</div>
 {{! Draw and discard deck }}
 <div class="flex flex-col items-center justify-center h-screen pb-10">
     <div class="flex align-top mb-10">
@@ -128,6 +179,51 @@
         </div>
     </div>
 </div>
+{{! Chat box }}
+<div id="chat-container">
+  <ul id="messages"></ul>
+  <form id="chat-form" action="">
+    <input id="m" autocomplete="off" /><button>ส่ง</button>
+  </form>
+  <style>
+    #chat-container {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-top: 170px; /* Increase the margin from the top */
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#messages li {
+  padding: 8px;
+  margin-bottom: 2px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
+
+#chat-form {
+  display: flex;
+  margin-top: 10px;
+}
+
+#m {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+  </style>
+</div>
 {{! Sidebar }}
 <div class="fixed inset-0 overflow-hidden z-10" x-show="sidebar_open">
     <div class="absolute inset-0 overflow-hidden" x-show="sidebar_open">
@@ -157,7 +253,7 @@
                                     <svg class="-ml-1 mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                                     </svg>
-                                    Return Home
+                                    ย้อนกลับ
                                 </button>
                             </div>
                         </div>
@@ -169,7 +265,7 @@
                                     <div class="flex flex-row items-center justify-between">
                                         <div class="flex flex-col text-left">
                                             <div class="text-xs uppercase text-gray-500 truncate">
-                                                Status
+                                                สถานะเกม
                                             </div>
                                             <div class="text-lg font-bold">
                                                 ...
@@ -186,7 +282,7 @@
                                     <div class="flex flex-row items-center justify-between">
                                         <div class="flex flex-col text-left">
                                             <div class="text-xs uppercase text-gray-500 truncate">
-                                                Game Code
+                                                รหัสห้อง
                                             </div>
                                             <div class="text-lg font-bold" id="sidebar_game_code">
                                                 {{ slug_2 }}
@@ -205,7 +301,7 @@
                                     <div class="flex flex-row items-center justify-between">
                                         <div class="flex flex-col">
                                             <div class="text-xs uppercase text-gray-500 truncate">
-                                                Exploding Chickens
+                                                การ์ดหมูระเบิด
                                             </div>
                                             <div class="text-lg font-bold truncate" id="sbr_ele_ec_count">
                                                 ...
@@ -223,7 +319,7 @@
                                     <div class="flex flex-row items-center justify-between">
                                         <div class="flex flex-col">
                                             <div class="text-xs uppercase text-gray-500 truncate">
-                                                Cards Left
+                                                สำรับการ์ดทั้งหมด
                                             </div>
                                             <div class="text-lg font-bold truncate" id="sbr_ele_cards_remain">
                                                 ...
@@ -240,7 +336,7 @@
                     {{! Sidebar players }}
                     <div class="mt-4 px-5">
                         <h2 class="text-xl font-medium text-gray-700">
-                            Players
+                            ผู้เล่น
                         </h2>
                     </div>
                     <div class="mt-4 relative flex flex-col px-5" id="sbr_ele_players">
@@ -258,7 +354,7 @@
                     {{! Sidebar card packs }}
                     <div class="mt-4 px-5">
                         <h2 class="text-xl font-medium text-gray-700">
-                            Card Packs
+                            แพ็คการ์ด
                         </h2>
                     </div>
                     <div class="mt-4 mb-7 relative flex flex-col px-5">
@@ -269,7 +365,7 @@
                                     <svg class="mr-1 mt-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                                     </svg>
-                                    Base Deck
+                                    การ์ดพื้นฐาน
                                 </h3>
                                 <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
                                     <div class="flex items-center text-sm text-gray-500">
@@ -283,67 +379,11 @@
                                             <svg class="-ml-1 mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                             </svg>
-                                            Imported
+                                            นำเข้า
                                       </button>
                                 </span>
                             </div>
                         </div>
-                        {{! Sample pack }}
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex-1 min-w-0">
-                                <h3 class="inline-flex text-md font-bold text-gray-900 truncate">
-                                    <svg class="mr-1 mt-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                                    </svg>
-                                    Expansion Pack
-                                </h3>
-                                <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
-                                    <div class="flex items-center text-sm text-gray-500">
-                                        Coming soon in 2021!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex mt-0 ml-4">
-                                <span class="">
-                                      <button type="button" class="inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
-                                            <svg class="-ml-1 mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                            Not Available
-                                      </button>
-                                </span>
-                            </div>
-                        </div>
-                        {{! Add packs }}
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex-1 min-w-0">
-                                <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
-                                    <div class="flex items-center text-xs text-gray-400">
-                                        <p>Got an idea for a card pack? Submit a feature request <a class="text-blue-600" target="_blank" href="https://github.com/rak3rman/exploding-chickens/issues">here!</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-4 px-5 absolute bottom-0 left-0">
-                        <h2 class="text-xl font-medium text-gray-700">
-                            <button type="button" onclick="window.open('https://github.com/rak3rman/exploding-chickens', '_blank')" class="inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                <svg class="-ml-1 mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                </svg>
-                                Release v{{ version }}
-                            </button>
-                        </h2>
-                    </div>
-                    <div class="mb-4 px-5 absolute bottom-0 right-0">
-                        <h2 class="text-xl font-medium text-gray-700">
-                            <button type="button" onclick="window.open('https://github.com/rak3rman/exploding-chickens/issues', '_blank')" class="inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                                <svg class="-ml-1 mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Issues
-                            </button>
-                        </h2>
                     </div>
                 </div>
             </div>

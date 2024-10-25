@@ -19,19 +19,19 @@ function sbr_update_widgets(game_details) {
             stat_icon = "<svg class=\"stroke-current text-white\" height=\"24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
                 "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9\" />\n" +
                 "</svg>";
-            stat_text = "Starting...";
+            stat_text = "กำลังเริ่ม";
         } else if (game_details.status === "in_lobby") {
             stat_header = "<button type=\"button\" class=\"widget w-full p-2.5 rounded-lg bg-white border border-gray-100 bg-gradient-to-r from-green-500 to-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500\" onclick=\"start_game()\">\n";
             stat_icon = "<svg class=\"stroke-current text-white\" height=\"24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
                 "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9\" />\n" +
                 "</svg>";
-            stat_text = "Start <span class=\"hidden sm:inline-block\">game</span>";
+            stat_text = "เริ่มเกม";
         } else if (game_details.status === "in_game") {
             stat_header = "<button type=\"button\" class=\"widget w-full p-2.5 rounded-lg bg-white border border-gray-100 bg-gradient-to-r from-yellow-500 to-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500\"  onclick=\"reset_game()\">\n";
             stat_icon = "<svg class=\"stroke-current text-white\" height=\"24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
                 "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15\" />\n" +
                 "</svg>";
-            stat_text = "Reset <span class=\"hidden sm:inline-block\">game</span>";
+            stat_text = "เริ่มใหม่ <span class=\"hidden sm:inline-block\">game</span>";
         }
         stat_color_a = "text-white";
         stat_color_b = "text-white";
@@ -40,12 +40,12 @@ function sbr_update_widgets(game_details) {
             stat_icon = "<svg class=\"stroke-current text-blue-500\" height=\"24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
                 "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z\" />\n" +
                 "</svg>\n";
-            stat_text = "In lobby";
+            stat_text = "อยู่ในล๊อบบี้";
         } else if (game_details.status === "in_game") {
             stat_icon = "<svg class=\"stroke-current text-blue-500\" height=\"24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
                 "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z\" />\n" +
                 "</svg>\n";
-            stat_text = "In game";
+            stat_text = "อยู่ในเกม";
         }
         stat_color_a = "text-gray-500";
         stat_color_b = "text-black";
@@ -55,7 +55,7 @@ function sbr_update_widgets(game_details) {
         "    <div class=\"flex flex-row items-center justify-between\">\n" +
         "        <div class=\"flex flex-col text-left\">\n" +
         "            <div class=\"text-xs uppercase truncate " + stat_color_a + "\">\n" +
-        "                Status\n" +
+        "                สถานะเกม\n" +
         "            </div>\n" +
         "            <div class=\"text-lg font-bold truncate " + stat_color_b + "\">\n" +
         "                " + stat_text + "\n" +
